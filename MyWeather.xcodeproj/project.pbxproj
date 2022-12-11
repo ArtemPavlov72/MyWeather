@@ -12,6 +12,8 @@
 		ACFD61422945028D00FE446E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACFD61412945028D00FE446E /* Assets.xcassets */; };
 		ACFD61452945028D00FE446E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACFD61432945028D00FE446E /* LaunchScreen.storyboard */; };
 		ACFD614D2945029E00FE446E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFD614C2945029E00FE446E /* Constants.swift */; };
+		ACFD614F2945BDBF00FE446E /* WeatherViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFD614E2945BDBF00FE446E /* WeatherViewCell.swift */; };
+		ACFD61512945BFA500FE446E /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFD61502945BFA500FE446E /* Weather.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		ACFD61442945028D00FE446E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ACFD61462945028D00FE446E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ACFD614C2945029E00FE446E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		ACFD614E2945BDBF00FE446E /* WeatherViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewCell.swift; sourceTree = "<group>"; };
+		ACFD61502945BFA500FE446E /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,11 +61,21 @@
 				ACFD61382945028A00FE446E /* AppDelegate.swift */,
 				ACFD614C2945029E00FE446E /* Constants.swift */,
 				ACFD613C2945028A00FE446E /* ViewController.swift */,
+				ACFD61522945BFAB00FE446E /* Models */,
+				ACFD614E2945BDBF00FE446E /* WeatherViewCell.swift */,
 				ACFD61412945028D00FE446E /* Assets.xcassets */,
 				ACFD61432945028D00FE446E /* LaunchScreen.storyboard */,
 				ACFD61462945028D00FE446E /* Info.plist */,
 			);
 			path = MyWeather;
+			sourceTree = "<group>";
+		};
+		ACFD61522945BFAB00FE446E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				ACFD61502945BFA500FE446E /* Weather.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,6 +151,8 @@
 				ACFD613D2945028A00FE446E /* ViewController.swift in Sources */,
 				ACFD61392945028A00FE446E /* AppDelegate.swift in Sources */,
 				ACFD614D2945029E00FE446E /* Constants.swift in Sources */,
+				ACFD614F2945BDBF00FE446E /* WeatherViewCell.swift in Sources */,
+				ACFD61512945BFA500FE446E /* Weather.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

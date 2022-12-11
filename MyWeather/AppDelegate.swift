@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  MyWeather
 //
-//  Created by Артем Павлов on 10.12.2022.
+//  Created by Artem Pavlov on 10.12.2022.
 //
 
 import UIKit
@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = UINavigationController(rootViewController: ViewController())
+        window?.rootViewController = UINavigationController(rootViewController: WeatherController())
         window?.makeKeyAndVisible()
         return true
     }

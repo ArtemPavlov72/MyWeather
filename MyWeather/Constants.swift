@@ -2,7 +2,7 @@
 //  Constants.swift
 //  MyWeather
 //
-//  Created by Артем Павлов on 10.12.2022.
+//  Created by Artem Pavlov on 10.12.2022.
 //
 
 import Foundation
