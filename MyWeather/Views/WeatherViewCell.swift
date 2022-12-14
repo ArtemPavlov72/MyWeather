@@ -24,11 +24,9 @@ class WeatherViewCell: UITableViewCell {
        }
 
     func configure(with city: Weather) {
-        cityName.text = city.location?.name
-        if let tempereture = city.current?.temp_c {
-            temp.text = String(describing: tempereture) + "℃"
-        }
-        fetchImage(from: city.current?.condition?.icon)
+        cityName.text = city.location.name
+        temp.text = String(describing: city.current.temp_c) + "℃"
+        fetchImage(from: city.current.condition.icon)
     }
     
     private func fetchImage(from url: String?) {
