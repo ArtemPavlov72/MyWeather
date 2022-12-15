@@ -25,7 +25,7 @@ class WeatherViewCell: UITableViewCell {
 
     func configure(with city: Weather) {
         cityName.text = city.location.name
-        temp.text = String(describing: city.current.temp_c) + "℃"
+        temp.text = String(describing: city.current.temp_c) + "°"
         fetchImage(from: city.current.condition.icon)
     }
     

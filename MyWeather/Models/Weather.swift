@@ -47,8 +47,8 @@ struct ForecastDay: Decodable, Hashable {
 }
 
 struct DayForecastDetails: Decodable, Hashable {
-    let maxtemp_c: String
-    let mintemp_c: String
+    let maxtemp_c: Double
+    let mintemp_c: Double
     let daily_chance_of_rain: Int
     let daily_chance_of_snow: Int
     let condition: Condition
@@ -61,6 +61,17 @@ struct Astro: Decodable, Hashable {
 
 struct Hour: Decodable, Hashable {
     let time: String
-    let temp_c: String
+    let temp_c: Double
     let condition: Condition
+}
+
+enum Links: String {
+    case baseURL = "http://api.weatherapi.com/v1"
+    case currentWeather = "/current.json"
+    case forecast = "/forecast.json"
+    case historyWeather = "/history.json"
+}
+
+enum Keys: String {
+    case apiKey = "1574ca7511704252b03180557221012"
 }

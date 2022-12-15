@@ -14,6 +14,8 @@ class CityInfoCell: UICollectionViewCell {
     let cityName = UILabel()
     let tempLabel = UILabel()
     let conditionLabel = UILabel()
+    let highTempLabel = UILabel()
+    let lowTempLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,12 +31,19 @@ class CityInfoCell: UICollectionViewCell {
         cityName.translatesAutoresizingMaskIntoConstraints = false
         tempLabel.translatesAutoresizingMaskIntoConstraints = false
         conditionLabel.translatesAutoresizingMaskIntoConstraints = false
+        highTempLabel.translatesAutoresizingMaskIntoConstraints = false
+        lowTempLabel.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func configure(with city: Weather) {
         cityName.text = city.location.name
-        tempLabel.text = city.current.temp_c.description + "℃"
+        tempLabel.text = city.current.temp_c.description + "°"
         conditionLabel.text = city.current.condition.text
+        
+        guard let forecastForDay = city.forecast.forecastday.first else {return}
+        highTempLabel.text = "H: " + String(describing:forecastForDay.day.maxtemp_c) + "°"
+        lowTempLabel.text = "L: " + String(describing:forecastForDay.day.mintemp_c) + "°"
+
     }
     
     required init?(coder: NSCoder) {
@@ -48,6 +57,8 @@ extension CityInfoCell {
         addSubview(cityName)
         addSubview(tempLabel)
         addSubview(conditionLabel)
+        addSubview(highTempLabel)
+        addSubview(lowTempLabel)
         
         cityName.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         cityName.topAnchor.constraint(equalTo: self.topAnchor, constant: 8).isActive = true
@@ -57,5 +68,11 @@ extension CityInfoCell {
         
         conditionLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         conditionLabel.topAnchor.constraint(equalTo: self.tempLabel.bottomAnchor, constant: 8).isActive = true
+        
+        highTempLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: -40).isActive = true
+        highTempLabel.topAnchor.constraint(equalTo: self.conditionLabel.bottomAnchor).isActive = true
+        
+        lowTempLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 40).isActive = true
+        lowTempLabel.topAnchor.constraint(equalTo: self.conditionLabel.bottomAnchor).isActive = true
     }
 }
