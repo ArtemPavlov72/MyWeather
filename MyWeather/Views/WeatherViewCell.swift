@@ -11,7 +11,7 @@ class WeatherViewCell: UITableViewCell {
     
     let cityName = UILabel()
     let temp = UILabel()
-    var picture = UIImageView()
+    let picture = UIImageView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
            super.init(style: style, reuseIdentifier: reuseIdentifier)

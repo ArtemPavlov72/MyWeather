@@ -9,7 +9,7 @@ import UIKit
 
 class CityInfoCell: UICollectionViewCell {
     
-    static var reuseId: String = "CityCell"
+    static var reuseId: String = "cityInfo"
     
     let cityName = UILabel()
     let tempLabel = UILabel()
@@ -19,12 +19,9 @@ class CityInfoCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor(white: 1, alpha: 1)
         setupElements()
         setupConstraints()
 
-        self.layer.cornerRadius = 4
-        self.clipsToBounds = true
     }
     
     func setupElements() {

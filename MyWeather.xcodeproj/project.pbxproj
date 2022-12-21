@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC09FEF7294B303C00BFD264 /* HourInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC09FEF6294B303C00BFD264 /* HourInfoCell.swift */; };
 		AC30606E2949AFD300013BED /* WeatherDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC30606D2949AFD300013BED /* WeatherDetailsViewController.swift */; };
 		AC3060702949B18B00013BED /* CityInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC30606F2949B18B00013BED /* CityInfoCell.swift */; };
 		ACFD61392945028A00FE446E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFD61382945028A00FE446E /* AppDelegate.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AC09FEF6294B303C00BFD264 /* HourInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourInfoCell.swift; sourceTree = "<group>"; };
 		AC30606D2949AFD300013BED /* WeatherDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailsViewController.swift; sourceTree = "<group>"; };
 		AC30606F2949B18B00013BED /* CityInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityInfoCell.swift; sourceTree = "<group>"; };
 		ACFD61352945028A00FE446E /* MyWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,6 +52,7 @@
 			children = (
 				ACFD614E2945BDBF00FE446E /* WeatherViewCell.swift */,
 				AC30606F2949B18B00013BED /* CityInfoCell.swift */,
+				AC09FEF6294B303C00BFD264 /* HourInfoCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -188,6 +191,7 @@
 				ACFD614D2945029E00FE446E /* URLManager.swift in Sources */,
 				ACFD614F2945BDBF00FE446E /* WeatherViewCell.swift in Sources */,
 				AC30606E2949AFD300013BED /* WeatherDetailsViewController.swift in Sources */,
+				AC09FEF7294B303C00BFD264 /* HourInfoCell.swift in Sources */,
 				ACFD61512945BFA500FE446E /* Weather.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

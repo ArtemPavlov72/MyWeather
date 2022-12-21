@@ -50,7 +50,7 @@ class WeatherController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         let city = isFiltering ? filteredCities[indexPath.item] : citiesList[indexPath.item]
         let weatherDetailVC = WeatherDetailsViewController()
-        weatherDetailVC.city = city
+        weatherDetailVC.cityWeather = city
         show(weatherDetailVC, sender: nil)
     }
     
@@ -60,13 +60,12 @@ class WeatherController: UITableViewController {
     }
     
     private func getWeatherForCity(_ city: String) {
-        NetworkManager.shared.fetchData(for: city, from: URLManager.shared.getWeatherURL(forCity: city, forNumberOfDays: 10)) {
+        NetworkManager.shared.fetchData(for: city, from: URLManager.shared.getWeatherURL(forCity: city, forNumberOfDays: 8)) {
             result in
             switch result {
             case .success(let weather):
                 self.citiesList.append(weather)
                 self.tableView.reloadData()
-                print("\(weather)")
             case .failure(let error):
                 print(error)
             }
