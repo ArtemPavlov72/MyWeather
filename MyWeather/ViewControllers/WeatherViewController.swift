@@ -60,7 +60,7 @@ class WeatherController: UITableViewController {
     }
     
     private func getWeatherForCity(_ city: String) {
-        NetworkManager.shared.fetchData(for: city, from: URLManager.shared.getWeatherURL(forCity: city, forNumberOfDays: 8)) {
+        NetworkManager.shared.fetchData(for: city, from: URLManager.shared.getWeatherURL(forCity: city, forNumberOfDays: 3)) {
             result in
             switch result {
             case .success(let weather):

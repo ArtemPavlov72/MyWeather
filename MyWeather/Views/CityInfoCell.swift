@@ -9,22 +9,21 @@ import UIKit
 
 class CityInfoCell: UICollectionViewCell {
     
-    static var reuseId: String = "cityInfo"
+    static let reuseId: String = "cityInfo"
     
-    let cityName = UILabel()
-    let tempLabel = UILabel()
-    let conditionLabel = UILabel()
-    let highTempLabel = UILabel()
-    let lowTempLabel = UILabel()
+    private let cityName = UILabel()
+    private let tempLabel = UILabel()
+    private let conditionLabel = UILabel()
+    private let highTempLabel = UILabel()
+    private let lowTempLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupElements()
         setupConstraints()
-
     }
     
-    func setupElements() {
+    private func setupElements() {
         cityName.translatesAutoresizingMaskIntoConstraints = false
         tempLabel.translatesAutoresizingMaskIntoConstraints = false
         conditionLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -40,7 +39,6 @@ class CityInfoCell: UICollectionViewCell {
         guard let forecastForDay = city.forecast.forecastday.first else {return}
         highTempLabel.text = "H: " + String(describing:forecastForDay.day.maxtemp_c) + "°"
         lowTempLabel.text = "L: " + String(describing:forecastForDay.day.mintemp_c) + "°"
-
     }
     
     required init?(coder: NSCoder) {
@@ -50,7 +48,7 @@ class CityInfoCell: UICollectionViewCell {
 
 // MARK: - Setup Constraints
 extension CityInfoCell {
-    func setupConstraints() {
+    private func setupConstraints() {
         addSubview(cityName)
         addSubview(tempLabel)
         addSubview(conditionLabel)
@@ -58,7 +56,7 @@ extension CityInfoCell {
         addSubview(lowTempLabel)
         
         cityName.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        cityName.topAnchor.constraint(equalTo: self.topAnchor, constant: 8).isActive = true
+        cityName.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         
         tempLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         tempLabel.topAnchor.constraint(equalTo: self.cityName.bottomAnchor, constant: 8).isActive = true

@@ -9,11 +9,11 @@ import UIKit
 
 class HourInfoCell: UICollectionViewCell {
     
-    static var reuseId: String = "hourWeather"
+    static let reuseId: String = "hourWeather"
     
-    let tempLabel = UILabel()
-    let timeLabel = UILabel()
-    let icon = UIImageView()
+    private let tempLabel = UILabel()
+    private let timeLabel = UILabel()
+    private let icon = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,7 +22,7 @@ class HourInfoCell: UICollectionViewCell {
 
     }
     
-    func setupElements() {
+    private func setupElements() {
         timeLabel.translatesAutoresizingMaskIntoConstraints = false
         tempLabel.translatesAutoresizingMaskIntoConstraints = false
         icon.translatesAutoresizingMaskIntoConstraints = false
@@ -66,7 +66,7 @@ class HourInfoCell: UICollectionViewCell {
 
 // MARK: - Setup Constraints
 extension HourInfoCell {
-    func setupConstraints() {
+    private func setupConstraints() {
         addSubview(timeLabel)
         addSubview(tempLabel)
         addSubview(icon)

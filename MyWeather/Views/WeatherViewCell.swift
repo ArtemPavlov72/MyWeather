@@ -9,20 +9,19 @@ import UIKit
 
 class WeatherViewCell: UITableViewCell {
     
-    let cityName = UILabel()
-    let temp = UILabel()
-    let picture = UIImageView()
+    private let cityName = UILabel()
+    private let temp = UILabel()
+    private let picture = UIImageView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-           super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupConstraints()
     }
     
     required init?(coder: NSCoder) {
-           fatalError("init(coder:) has not been implemented")
-       }
-
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func configure(with city: Weather) {
         cityName.text = city.location.name
         temp.text = String(describing: city.current.temp_c) + "°"
@@ -39,8 +38,8 @@ class WeatherViewCell: UITableViewCell {
             }
         }
     }
-
-    func setupConstraints() {
+    
+    private func setupConstraints() {
         addSubview(cityName)
         addSubview(temp)
         addSubview(picture)
@@ -48,13 +47,13 @@ class WeatherViewCell: UITableViewCell {
         temp.translatesAutoresizingMaskIntoConstraints = false
         picture.translatesAutoresizingMaskIntoConstraints = false
         
-        cityName.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
+        cityName.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         cityName.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30).isActive = true
         
-        temp.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
+        temp.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         temp.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -30).isActive = true
         
-        picture.leadingAnchor.constraint(equalTo: cityName.trailingAnchor, constant: 20).isActive = true
+        picture.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        picture.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     }
-
 }
