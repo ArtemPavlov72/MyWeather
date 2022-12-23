@@ -27,6 +27,7 @@ struct CityWeatherData: Decodable, Hashable {
     let wind_kph: Double
     let humidity: Int
     let feelslike_c: Double
+    let gust_kph: Double
     let uv: Int
 }
 

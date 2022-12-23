@@ -50,7 +50,7 @@ class WeatherController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         let city = isFiltering ? filteredCities[indexPath.item] : citiesList[indexPath.item]
         let weatherDetailVC = WeatherDetailsViewController()
-        weatherDetailVC.cityWeather = city
+        weatherDetailVC.weather = city
         show(weatherDetailVC, sender: nil)
     }
     
