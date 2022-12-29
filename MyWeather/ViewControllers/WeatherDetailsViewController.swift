@@ -13,13 +13,15 @@ class WeatherDetailsViewController: UIViewController {
         case currentWeather
         case hourWeather
         case weekendWeather
-        case textDescriptionOfDay
+        case windDescription
+        case weatherDaySpecs
     }
     
     var weather: Weather!
     private var hourWeather: [Hour] = []
     private var weekendWeather: [ForecastDay] = []
-    private var windInfo: [CityWeatherData] = []
+    private var windInfo: CityWeatherData?
+    private var daySpecs: [DaySpec] = []
     private var dataSource: UICollectionViewDiffableDataSource<Section, AnyHashable>?
     private var collectionView: UICollectionView!
     
@@ -36,7 +38,10 @@ class WeatherDetailsViewController: UIViewController {
         hourWeather = forecastDay?.hour ?? []
         weekendWeather.append(forecast.forecastday[1])
         weekendWeather.append(forecast.forecastday[2])
-        windInfo.append(weather.current)
+        windInfo = weather.current
+        
+        WeatherSpecs.allCases.map { daySpecs.append(DaySpec(description: $0.rawValue, value: WeatherSpecs.getInfo(for: $0, from: weather)))
+        }
     }
     
     private func setupCollectionView() {
@@ -48,8 +53,8 @@ class WeatherDetailsViewController: UIViewController {
         collectionView.register(CityInfoCell.self, forCellWithReuseIdentifier: CityInfoCell.reuseId)
         collectionView.register(HourInfoCell.self, forCellWithReuseIdentifier: HourInfoCell.reuseId)
         collectionView.register(WeekendInfoCell.self, forCellWithReuseIdentifier: WeekendInfoCell.reuseId)
-        collectionView.register(TextDescriptionOfDayCell.self, forCellWithReuseIdentifier: TextDescriptionOfDayCell.reuseId)
-        
+        collectionView.register(WindDescriptionCell.self, forCellWithReuseIdentifier: WindDescriptionCell.reuseId)
+        collectionView.register(DaySpecsCell.self, forCellWithReuseIdentifier: DaySpecsCell.reuseId)
     }
     
     // MARK: - Manage the data
@@ -81,11 +86,20 @@ class WeatherDetailsViewController: UIViewController {
                 cell.configure(with: weather as! ForecastDay)
                 return cell
                 
-            case .textDescriptionOfDay:
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TextDescriptionOfDayCell.reuseId, for: indexPath) as? TextDescriptionOfDayCell else {
-                    return TextDescriptionOfDayCell()
+            case .windDescription:
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WindDescriptionCell.reuseId, for: indexPath) as? WindDescriptionCell else {
+                    return WindDescriptionCell()
                 }
                 cell.configure(with: weather as! CityWeatherData)
+                return cell
+                
+            case .weatherDaySpecs:
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DaySpecsCell.reuseId, for: indexPath) as? DaySpecsCell else {
+                    return DaySpecsCell()
+                }
+                
+                let spec = self.daySpecs[indexPath.row]
+                cell.configure(with: spec.description, and: spec.value)
                 return cell
             }
         }
@@ -94,11 +108,9 @@ class WeatherDetailsViewController: UIViewController {
     
     private func generateSnapshot() -> NSDiffableDataSourceSnapshot<Section, AnyHashable>  {
         var snapshot = NSDiffableDataSourceSnapshot<Section, AnyHashable>()
-        
-        let headerCityInfoWeather = [weather!]
-        
+    
         snapshot.appendSections([Section.currentWeather])
-        snapshot.appendItems(headerCityInfoWeather, toSection: .currentWeather)
+        snapshot.appendItems([weather], toSection: .currentWeather)
         
         snapshot.appendSections([Section.hourWeather])
         snapshot.appendItems(hourWeather, toSection: .hourWeather)
@@ -106,8 +118,11 @@ class WeatherDetailsViewController: UIViewController {
         snapshot.appendSections([Section.weekendWeather])
         snapshot.appendItems(weekendWeather, toSection: .weekendWeather)
         
-        snapshot.appendSections([Section.textDescriptionOfDay])
-        snapshot.appendItems(windInfo, toSection: .textDescriptionOfDay)
+        snapshot.appendSections([Section.windDescription])
+        snapshot.appendItems([windInfo], toSection: .windDescription)
+        
+        snapshot.appendSections([Section.weatherDaySpecs])
+        snapshot.appendItems(daySpecs, toSection: .weatherDaySpecs)
         
         return snapshot
     }
@@ -124,8 +139,10 @@ class WeatherDetailsViewController: UIViewController {
                 return self.createHourInfoSection()
             case .weekendWeather:
                 return self.createWeekendInfoSection()
-            case .textDescriptionOfDay:
+            case .windDescription:
                 return self.textDescriptionOdDaySection()
+            case .weatherDaySpecs:
+                return self.daySpecsSection()
             }
         }
         return layout
@@ -183,6 +200,20 @@ class WeatherDetailsViewController: UIViewController {
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(1/8))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+        
+        let layoutSection = NSCollectionLayoutSection(group: group)
+        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 20, leading: 8, bottom: 0, trailing: 8)
+        
+        return layoutSection
+    }
+    
+    private func daySpecsSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                              heightDimension: .fractionalHeight(1/3))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1/14))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
         
         let layoutSection = NSCollectionLayoutSection(group: group)
         layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 20, leading: 8, bottom: 0, trailing: 8)
