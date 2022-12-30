@@ -10,7 +10,7 @@ import UIKit
 class WindDescriptionCell: UICollectionViewCell {
     
     //MARK: - Static Properties
-    static var reuseId: String = "textDescriptionOfDay"
+    static let reuseId: String = "textDescriptionOfDay"
     
     //MARK: - Private Properties
     private var descriptionWeatherLabel: UILabel = {
@@ -22,7 +22,7 @@ class WindDescriptionCell: UICollectionViewCell {
     //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupElements()
+        setupElements(descriptionWeatherLabel)
         setupSubViews(descriptionWeatherLabel)
         setupConstraints()
     }
@@ -37,13 +37,13 @@ class WindDescriptionCell: UICollectionViewCell {
     }
     
     //MARK: - Private Methods
-    private func setupElements() {
-        descriptionWeatherLabel.translatesAutoresizingMaskIntoConstraints = false
+    private func setupElements(_ subViews: UIView...) {
+        subViews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false
+        }
     }
     
     private func setupSubViews(_ subViews: UIView...) {
-        subViews.forEach { subview in
-            self.addSubview(subview)
+        subViews.forEach { self.addSubview($0)
         }
     }
     

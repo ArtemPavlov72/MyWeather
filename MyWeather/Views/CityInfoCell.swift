@@ -22,7 +22,7 @@ class CityInfoCell: UICollectionViewCell {
     //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupElements()
+        setupElements(cityName, tempLabel, conditionLabel, highTempLabel, lowTempLabel)
         setupSubViews(cityName, tempLabel, conditionLabel, highTempLabel, lowTempLabel)
         setupConstraints()
     }
@@ -43,17 +43,13 @@ class CityInfoCell: UICollectionViewCell {
     }
     
     //MARK: - Private Methods
-    private func setupElements() {
-        cityName.translatesAutoresizingMaskIntoConstraints = false
-        tempLabel.translatesAutoresizingMaskIntoConstraints = false
-        conditionLabel.translatesAutoresizingMaskIntoConstraints = false
-        highTempLabel.translatesAutoresizingMaskIntoConstraints = false
-        lowTempLabel.translatesAutoresizingMaskIntoConstraints = false
+    private func setupElements(_ subViews: UIView...) {
+        subViews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false
+        }
     }
     
     private func setupSubViews(_ subViews: UIView...) {
-        subViews.forEach { subview in
-            self.addSubview(subview)
+        subViews.forEach { self.addSubview($0)
         }
     }
     

@@ -20,7 +20,7 @@ class HourInfoCell: UICollectionViewCell {
     //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupElements()
+        setupElements(timeLabel, tempLabel, icon)
         setupSubViews(timeLabel, tempLabel, icon)
         setupConstraints()
     }
@@ -37,12 +37,6 @@ class HourInfoCell: UICollectionViewCell {
     }
     
     //MARK: - Private Methods
-    private func setupElements() {
-        timeLabel.translatesAutoresizingMaskIntoConstraints = false
-        tempLabel.translatesAutoresizingMaskIntoConstraints = false
-        icon.translatesAutoresizingMaskIntoConstraints = false
-    }
-    
     private func formatDate(_ date: String, fromFormat: String, toFormat: String) -> String {
         var dateToOutput = ""
         
@@ -68,9 +62,13 @@ class HourInfoCell: UICollectionViewCell {
         }
     }
     
+    private func setupElements(_ subViews: UIView...) {
+        subViews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
+    
     private func setupSubViews(_ subViews: UIView...) {
-        subViews.forEach { subview in
-            self.addSubview(subview)
+        subViews.forEach { self.addSubview($0)
         }
     }
     

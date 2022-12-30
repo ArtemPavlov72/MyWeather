@@ -10,7 +10,7 @@ import UIKit
 class WeatherViewCell: UITableViewCell {
     
     //MARK: - Static Properties
-    static var reuseId: String = "weatherCell"
+    static let reuseId: String = "weatherCell"
 
     //MARK: - Private Properties
     private let cityName = UILabel()
@@ -20,6 +20,7 @@ class WeatherViewCell: UITableViewCell {
     //MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupElements(cityName, temp, picture)
         setupSubViews(cityName, temp, picture)
         setupConstraints()
     }
@@ -47,18 +48,18 @@ class WeatherViewCell: UITableViewCell {
         }
     }
     
+    private func setupElements(_ subViews: UIView...) {
+        subViews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
+    
     private func setupSubViews(_ subViews: UIView...) {
-        subViews.forEach { subview in
-            self.addSubview(subview)
+        subViews.forEach { self.addSubview($0)
         }
     }
     
     // MARK: - Setup Constraints
     private func setupConstraints() {
-        cityName.translatesAutoresizingMaskIntoConstraints = false
-        temp.translatesAutoresizingMaskIntoConstraints = false
-        picture.translatesAutoresizingMaskIntoConstraints = false
-        
         cityName.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         cityName.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30).isActive = true
         

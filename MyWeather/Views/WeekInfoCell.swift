@@ -9,17 +9,21 @@ import UIKit
 
 class WeekInfoCell: UICollectionViewCell {
     
-    static var reuseId: String = "weekendWeather"
+    //MARK: - Static Properties
+    static let reuseId: String = "weekendWeather"
     
+    //MARK: - Private Properties
     private let dayLabel = UILabel()
     private let icon = UIImageView()
     private let chanceLabel = UILabel()
     private let highTempLabel = UILabel()
     private let lowTempLabel = UILabel()
     
+    //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupElements()
+        setupElements(dayLabel, icon, chanceLabel, highTempLabel, lowTempLabel)
+        setupSubViews(dayLabel, icon, chanceLabel, highTempLabel, lowTempLabel)
         setupConstraints()
     }
     
@@ -27,14 +31,16 @@ class WeekInfoCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupElements() {
-        dayLabel.translatesAutoresizingMaskIntoConstraints = false
-        icon.translatesAutoresizingMaskIntoConstraints = false
-        chanceLabel.translatesAutoresizingMaskIntoConstraints = false
-        highTempLabel.translatesAutoresizingMaskIntoConstraints = false
-        lowTempLabel.translatesAutoresizingMaskIntoConstraints = false
+    //MARK: - Confirure cell
+    func configure(with forecast: ForecastDay) {
+        dayLabel.text = formatDate(forecast.date, fromFormat: "yyyy-MM-dd", toFormat: "EEEE")
+        fetchImage(from: forecast.day.condition.icon)
+        chanceLabel.text = chanceResult(with: forecast.day.daily_chance_of_rain, andWith: forecast.day.daily_chance_of_snow)
+        highTempLabel.text = String(format:"%.0f", forecast.day.maxtemp_c) + "°"
+        lowTempLabel.text = String(format:"%.0f", forecast.day.mintemp_c) + "°"
     }
     
+    //MARK: - Private Methods
     private func formatDate(_ date: String, fromFormat: String, toFormat: String) -> String {
         var dateToOutput = ""
         
@@ -74,24 +80,18 @@ class WeekInfoCell: UICollectionViewCell {
         return result
     }
     
-    func configure(with forecast: ForecastDay) {
-        dayLabel.text = formatDate(forecast.date, fromFormat: "yyyy-MM-dd", toFormat: "EEEE")
-        fetchImage(from: forecast.day.condition.icon)
-        chanceLabel.text = chanceResult(with: forecast.day.daily_chance_of_rain, andWith: forecast.day.daily_chance_of_snow)
-        highTempLabel.text = String(format:"%.0f", forecast.day.maxtemp_c) + "°"
-        lowTempLabel.text = String(format:"%.0f", forecast.day.mintemp_c) + "°"
+    private func setupElements(_ subViews: UIView...) {
+        subViews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false
+        }
     }
-}
-
-// MARK: - Setup Constraints
-extension WeekInfoCell {
+    
+    private func setupSubViews(_ subViews: UIView...) {
+        subViews.forEach { self.addSubview($0)
+        }
+    }
+    
+    // MARK: - Setup Constraints
     private func setupConstraints() {
-        addSubview(dayLabel)
-        addSubview(icon)
-        addSubview(chanceLabel)
-        addSubview(highTempLabel)
-        addSubview(lowTempLabel)
-        
         dayLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         dayLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         dayLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
@@ -103,7 +103,7 @@ extension WeekInfoCell {
         
         chanceLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 20).isActive = true
         chanceLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-      
+        
         highTempLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -40).isActive = true
         highTempLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         
