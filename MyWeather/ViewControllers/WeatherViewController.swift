@@ -9,7 +9,7 @@ import UIKit
 
 class WeatherController: UITableViewController {
     
-    private let cellID = "weatherCell"
+    //MARK: - Private Properties
     private var citiesList: [Weather] = []
     private var filteredCities: [Weather] = []
     
@@ -22,30 +22,29 @@ class WeatherController: UITableViewController {
         return searchController.isActive && !searchBarIsEmpty
     }
     
+    //MARK: - Life Cycles Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(WeatherViewCell.self, forCellReuseIdentifier: cellID)
+        tableView.register(WeatherViewCell.self, forCellReuseIdentifier: WeatherViewCell.reuseId)
         setupNavigationBar()
         setupSearchController()
         tableView.rowHeight = 70
-        getWeatherForCity("Moscow")
-        getWeatherForCity("London")
-        getWeatherForCity("Spain")
+        getWeatherForCity("Moscow", "London", "Spain", "Surgut", "Tyumen", "Tbilisi", "Kazan", "Berlin", "Paris", "Sofia")
     }
     
-    // MARK: - Table view data source
+    // MARK: - UITableViewDataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         isFiltering ? filteredCities.count : citiesList.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! WeatherViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: WeatherViewCell.reuseId, for: indexPath) as! WeatherViewCell
         let city = isFiltering ? filteredCities[indexPath.row] : citiesList[indexPath.row]
         cell.configure(with: city)
         return cell
     }
     
-    //MARK: - Table View Delegate
+    //MARK: - UITableViewDelegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let city = isFiltering ? filteredCities[indexPath.item] : citiesList[indexPath.item]
@@ -54,20 +53,23 @@ class WeatherController: UITableViewController {
         show(weatherDetailVC, sender: nil)
     }
     
+    //MARK: - Private Methods
     private func setupNavigationBar() {
         title = "Weather"
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
-    private func getWeatherForCity(_ city: String) {
-        NetworkManager.shared.fetchData(for: city, from: URLManager.shared.getWeatherURL(forCity: city, forNumberOfDays: 3)) {
-            result in
-            switch result {
-            case .success(let weather):
-                self.citiesList.append(weather)
-                self.tableView.reloadData()
-            case .failure(let error):
-                print(error)
+    private func getWeatherForCity(_ cities: String...) {
+        cities.forEach { city in
+            NetworkManager.shared.fetchData(for: city, from: Links.getWeatherURL(forCity: city, forNumberOfDays: 3)) {
+                result in
+                switch result {
+                case .success(let weather):
+                    self.citiesList.append(weather)
+                    self.tableView.reloadData()
+                case .failure(let error):
+                    print(error)
+                }
             }
         }
     }

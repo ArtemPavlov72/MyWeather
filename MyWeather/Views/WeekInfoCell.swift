@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WeekendInfoCell: UICollectionViewCell {
+class WeekInfoCell: UICollectionViewCell {
     
     static var reuseId: String = "weekendWeather"
     
@@ -84,7 +84,7 @@ class WeekendInfoCell: UICollectionViewCell {
 }
 
 // MARK: - Setup Constraints
-extension WeekendInfoCell {
+extension WeekInfoCell {
     private func setupConstraints() {
         addSubview(dayLabel)
         addSubview(icon)

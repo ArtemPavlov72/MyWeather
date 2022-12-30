@@ -9,29 +9,38 @@ import UIKit
 
 class HourInfoCell: UICollectionViewCell {
     
+    //MARK: - Static Properties
     static let reuseId: String = "hourWeather"
     
+    //MARK: - Private Properties
     private let tempLabel = UILabel()
     private let timeLabel = UILabel()
     private let icon = UIImageView()
     
+    //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupElements()
+        setupSubViews(timeLabel, tempLabel, icon)
         setupConstraints()
-
     }
     
-    private func setupElements() {
-        timeLabel.translatesAutoresizingMaskIntoConstraints = false
-        tempLabel.translatesAutoresizingMaskIntoConstraints = false
-        icon.translatesAutoresizingMaskIntoConstraints = false
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Confirure cell
     func configure(with hourWeather: Hour) {
         fetchImage(from: hourWeather.condition.icon)
         timeLabel.text = formatDate(hourWeather.time, fromFormat: "yyyy-MM-dd HH:mm", toFormat: "h:mm a")
         tempLabel.text = String(format:"%.0f", hourWeather.temp_c) + "°"
+    }
+    
+    //MARK: - Private Methods
+    private func setupElements() {
+        timeLabel.translatesAutoresizingMaskIntoConstraints = false
+        tempLabel.translatesAutoresizingMaskIntoConstraints = false
+        icon.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func formatDate(_ date: String, fromFormat: String, toFormat: String) -> String {
@@ -59,18 +68,14 @@ class HourInfoCell: UICollectionViewCell {
         }
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    private func setupSubViews(_ subViews: UIView...) {
+        subViews.forEach { subview in
+            self.addSubview(subview)
+        }
     }
-}
-
-// MARK: - Setup Constraints
-extension HourInfoCell {
+    
+    // MARK: - Setup Constraints
     private func setupConstraints() {
-        addSubview(timeLabel)
-        addSubview(tempLabel)
-        addSubview(icon)
-        
         timeLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         timeLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         

@@ -8,45 +8,61 @@
 import UIKit
 
 class DaySpecsCell: UICollectionViewCell {
-
+    
+    //MARK: - Static Properties
     static var reuseId: String = "weatherDaySpecs"
     
+    //MARK: - Private Properties
     private var descriptionLabel = UILabel()
     private var valueLabel = UILabel()
     
+    private var bottomLine: UIView = {
+        let line = UIView()
+        line.backgroundColor = .systemGray6
+        return line
+    }()
     
+    //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupElements()
+        setupSubViews(descriptionLabel, valueLabel, bottomLine)
         setupConstraints()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupElements() {
-        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        valueLabel.translatesAutoresizingMaskIntoConstraints = false
-    }
-    
+    //MARK: - Confirure cell
     func configure(with description: String, and value: String) {
         descriptionLabel.text = description
         valueLabel.text = value
     }
     
-}
-
-// MARK: - Setup Constraints
-extension DaySpecsCell {
+    //MARK: - Private Methods
+    private func setupElements() {
+        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        valueLabel.translatesAutoresizingMaskIntoConstraints = false
+        bottomLine.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private func setupSubViews(_ subViews: UIView...) {
+        subViews.forEach { subview in
+            self.addSubview(subview)
+        }
+    }
+    
+    // MARK: - Setup Constraints
     private func setupConstraints() {
-        addSubview(descriptionLabel)
-        addSubview(valueLabel)
-        
         descriptionLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         descriptionLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         
         valueLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         valueLabel.topAnchor.constraint(equalTo: self.descriptionLabel.bottomAnchor, constant: 3).isActive = true
+        
+        bottomLine.topAnchor.constraint(equalTo: self.valueLabel.bottomAnchor, constant: 0).isActive = true
+        bottomLine.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+        bottomLine.heightAnchor.constraint(equalToConstant: 1).isActive = true
     }
 }

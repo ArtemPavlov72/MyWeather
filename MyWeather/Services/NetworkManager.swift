@@ -7,12 +7,6 @@
 
 import Foundation
 
-enum NetworkError: Error {
-    case invalidURL
-    case noData
-    case decodingError
-}
-
 class NetworkManager {
     static let shared = NetworkManager()
     private init() {}
@@ -42,12 +36,10 @@ class NetworkManager {
     }
 }
 
-class ImageManager {
-    static let shared = ImageManager()
-    private init() {}
-    
-    func loadImage(from url: String?) -> Data? {
-        guard let imageURL = URL(string: url ?? "") else {return nil}
-        return try? Data(contentsOf: imageURL)
+extension NetworkManager {
+    enum NetworkError: Error {
+        case invalidURL
+        case noData
+        case decodingError
     }
 }

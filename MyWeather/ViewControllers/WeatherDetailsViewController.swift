@@ -9,22 +9,19 @@ import UIKit
 
 class WeatherDetailsViewController: UIViewController {
     
-    enum Section: Hashable, CaseIterable {
-        case currentWeather
-        case hourWeather
-        case weekendWeather
-        case windDescription
-        case weatherDaySpecs
-    }
-    
+    //MARK: - Public Properties
     var weather: Weather!
+    
+    //MARK: - Private Properties
     private var hourWeather: [Hour] = []
     private var weekendWeather: [ForecastDay] = []
     private var windInfo: CityWeatherData?
     private var daySpecs: [DaySpec] = []
+    
     private var dataSource: UICollectionViewDiffableDataSource<Section, AnyHashable>?
     private var collectionView: UICollectionView!
     
+    //MARK: - Life Cycles Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         getData()
@@ -32,6 +29,7 @@ class WeatherDetailsViewController: UIViewController {
         createDataSource()
     }
     
+    //MARK: - Private Methods
     private func getData() {
         let forecast = weather.forecast
         let forecastDay = forecast.forecastday.first
@@ -39,7 +37,6 @@ class WeatherDetailsViewController: UIViewController {
         weekendWeather.append(forecast.forecastday[1])
         weekendWeather.append(forecast.forecastday[2])
         windInfo = weather.current
-        
         WeatherSpecs.allCases.map { daySpecs.append(DaySpec(description: $0.rawValue, value: WeatherSpecs.getInfo(for: $0, from: weather)))
         }
     }
@@ -52,13 +49,12 @@ class WeatherDetailsViewController: UIViewController {
         
         collectionView.register(CityInfoCell.self, forCellWithReuseIdentifier: CityInfoCell.reuseId)
         collectionView.register(HourInfoCell.self, forCellWithReuseIdentifier: HourInfoCell.reuseId)
-        collectionView.register(WeekendInfoCell.self, forCellWithReuseIdentifier: WeekendInfoCell.reuseId)
+        collectionView.register(WeekInfoCell.self, forCellWithReuseIdentifier: WeekInfoCell.reuseId)
         collectionView.register(WindDescriptionCell.self, forCellWithReuseIdentifier: WindDescriptionCell.reuseId)
         collectionView.register(DaySpecsCell.self, forCellWithReuseIdentifier: DaySpecsCell.reuseId)
     }
     
-    // MARK: - Manage the data
-    
+    // MARK: - Manage the Data
     private func createDataSource() {
         dataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>(collectionView: collectionView){ (collectionView, indexPath, weather) -> UICollectionViewCell? in
             
@@ -79,9 +75,9 @@ class WeatherDetailsViewController: UIViewController {
                 cell.configure(with: weather as! Hour)
                 return cell
                 
-            case .weekendWeather:
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeekendInfoCell.reuseId, for: indexPath) as? WeekendInfoCell else {
-                    return WeekendInfoCell()
+            case .weekWeather:
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeekInfoCell.reuseId, for: indexPath) as? WeekInfoCell else {
+                    return WeekInfoCell()
                 }
                 cell.configure(with: weather as! ForecastDay)
                 return cell
@@ -93,7 +89,7 @@ class WeatherDetailsViewController: UIViewController {
                 cell.configure(with: weather as! CityWeatherData)
                 return cell
                 
-            case .weatherDaySpecs:
+            case .daySpecs:
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DaySpecsCell.reuseId, for: indexPath) as? DaySpecsCell else {
                     return DaySpecsCell()
                 }
@@ -108,21 +104,21 @@ class WeatherDetailsViewController: UIViewController {
     
     private func generateSnapshot() -> NSDiffableDataSourceSnapshot<Section, AnyHashable>  {
         var snapshot = NSDiffableDataSourceSnapshot<Section, AnyHashable>()
-    
+        
         snapshot.appendSections([Section.currentWeather])
         snapshot.appendItems([weather], toSection: .currentWeather)
         
         snapshot.appendSections([Section.hourWeather])
         snapshot.appendItems(hourWeather, toSection: .hourWeather)
         
-        snapshot.appendSections([Section.weekendWeather])
-        snapshot.appendItems(weekendWeather, toSection: .weekendWeather)
+        snapshot.appendSections([Section.weekWeather])
+        snapshot.appendItems(weekendWeather, toSection: .weekWeather)
         
         snapshot.appendSections([Section.windDescription])
         snapshot.appendItems([windInfo], toSection: .windDescription)
         
-        snapshot.appendSections([Section.weatherDaySpecs])
-        snapshot.appendItems(daySpecs, toSection: .weatherDaySpecs)
+        snapshot.appendSections([Section.daySpecs])
+        snapshot.appendItems(daySpecs, toSection: .daySpecs)
         
         return snapshot
     }
@@ -137,11 +133,11 @@ class WeatherDetailsViewController: UIViewController {
                 return self.createDayInfoSection()
             case .hourWeather:
                 return self.createHourInfoSection()
-            case .weekendWeather:
+            case .weekWeather:
                 return self.createWeekendInfoSection()
             case .windDescription:
                 return self.textDescriptionOdDaySection()
-            case .weatherDaySpecs:
+            case .daySpecs:
                 return self.daySpecsSection()
             }
         }
@@ -219,6 +215,16 @@ class WeatherDetailsViewController: UIViewController {
         layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 20, leading: 8, bottom: 0, trailing: 8)
         
         return layoutSection
+    }
+}
+
+extension WeatherDetailsViewController {
+    enum Section: Hashable, CaseIterable {
+        case currentWeather
+        case hourWeather
+        case weekWeather
+        case windDescription
+        case daySpecs
     }
 }
 

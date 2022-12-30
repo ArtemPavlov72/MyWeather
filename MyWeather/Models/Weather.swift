@@ -84,13 +84,14 @@ enum WeatherSpecs: String, Hashable, CaseIterable {
     case visibility = "VISIBILITY"
     case uvIndex = "UV INDEX"
     
-    //извлечь безопасно
+    //вынести в отдельный менеджер?
     static func getInfo(for specs: WeatherSpecs, from weather: Weather) -> String {
+        guard let forecast = weather.forecast.forecastday.first else { return "" }
         switch specs {
         case .sunrise:
-            return "\(String(describing: weather.forecast.forecastday.first!.astro.sunrise))"
+            return forecast.astro.sunrise
         case .sunset:
-            return weather.forecast.forecastday.first!.astro.sunset
+            return forecast.astro.sunset
         case .humidity:
             return "\(String(describing: weather.current.humidity))%"
         case .feelsLike:
@@ -112,6 +113,11 @@ enum Links: String {
     case currentWeather = "/current.json"
     case forecast = "/forecast.json"
     case historyWeather = "/history.json"
+    
+    static func getWeatherURL(forCity city: String, forNumberOfDays days: Int) -> String {
+        let url = "https://api.weatherapi.com/v1\(Links.forecast.rawValue)?key=\(Keys.apiKey.rawValue)&q=\(city)&days=\(days)&aqi=no&alerts=no"
+        return url
+    }
 }
 
 enum Keys: String {

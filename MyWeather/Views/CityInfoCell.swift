@@ -9,28 +9,29 @@ import UIKit
 
 class CityInfoCell: UICollectionViewCell {
     
+    //MARK: - Static Properties
     static let reuseId: String = "cityInfo"
     
+    //MARK: - Private Properties
     private let cityName = UILabel()
     private let tempLabel = UILabel()
     private let conditionLabel = UILabel()
     private let highTempLabel = UILabel()
     private let lowTempLabel = UILabel()
     
+    //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupElements()
+        setupSubViews(cityName, tempLabel, conditionLabel, highTempLabel, lowTempLabel)
         setupConstraints()
     }
     
-    private func setupElements() {
-        cityName.translatesAutoresizingMaskIntoConstraints = false
-        tempLabel.translatesAutoresizingMaskIntoConstraints = false
-        conditionLabel.translatesAutoresizingMaskIntoConstraints = false
-        highTempLabel.translatesAutoresizingMaskIntoConstraints = false
-        lowTempLabel.translatesAutoresizingMaskIntoConstraints = false
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Confirure cell
     func configure(with city: Weather) {
         cityName.text = city.location.name
         tempLabel.text = city.current.temp_c.description + "°"
@@ -41,20 +42,23 @@ class CityInfoCell: UICollectionViewCell {
         lowTempLabel.text = "L: " + String(describing:forecastForDay.day.mintemp_c) + "°"
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    //MARK: - Private Methods
+    private func setupElements() {
+        cityName.translatesAutoresizingMaskIntoConstraints = false
+        tempLabel.translatesAutoresizingMaskIntoConstraints = false
+        conditionLabel.translatesAutoresizingMaskIntoConstraints = false
+        highTempLabel.translatesAutoresizingMaskIntoConstraints = false
+        lowTempLabel.translatesAutoresizingMaskIntoConstraints = false
     }
-}
-
-// MARK: - Setup Constraints
-extension CityInfoCell {
+    
+    private func setupSubViews(_ subViews: UIView...) {
+        subViews.forEach { subview in
+            self.addSubview(subview)
+        }
+    }
+    
+    // MARK: - Setup Constraints
     private func setupConstraints() {
-        addSubview(cityName)
-        addSubview(tempLabel)
-        addSubview(conditionLabel)
-        addSubview(highTempLabel)
-        addSubview(lowTempLabel)
-        
         cityName.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         cityName.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         
