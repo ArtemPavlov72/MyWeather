@@ -62,16 +62,6 @@ class HourInfoCell: UICollectionViewCell {
         }
     }
     
-    private func setupElements(_ subViews: UIView...) {
-        subViews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
-    
-    private func setupSubViews(_ subViews: UIView...) {
-        subViews.forEach { self.addSubview($0)
-        }
-    }
-    
     // MARK: - Setup Constraints
     private func setupConstraints() {
         timeLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true

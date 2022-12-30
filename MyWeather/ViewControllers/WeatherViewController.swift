@@ -25,7 +25,7 @@ class WeatherController: UITableViewController {
     //MARK: - Life Cycles Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(WeatherViewCell.self, forCellReuseIdentifier: WeatherViewCell.reuseId)
+        tableView.register(WeatherTableViewCell.self, forCellReuseIdentifier: WeatherTableViewCell.reuseId)
         setupNavigationBar()
         setupSearchController()
         tableView.rowHeight = 70
@@ -38,7 +38,7 @@ class WeatherController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: WeatherViewCell.reuseId, for: indexPath) as! WeatherViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: WeatherTableViewCell.reuseId, for: indexPath) as! WeatherTableViewCell
         let city = isFiltering ? filteredCities[indexPath.row] : citiesList[indexPath.row]
         cell.configure(with: city)
         return cell

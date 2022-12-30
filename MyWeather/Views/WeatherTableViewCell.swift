@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WeatherViewCell: UITableViewCell {
+class WeatherTableViewCell: UITableViewCell {
     
     //MARK: - Static Properties
     static let reuseId: String = "weatherCell"

@@ -36,17 +36,6 @@ class WindDescriptionCell: UICollectionViewCell {
         descriptionWeatherLabel.text = "Now, wind speed is \(String(format:"%.0f",  windInfo.wind_kph / 3.6)) m/s. And gusts can change to \(String(format:"%.0f", windInfo.gust_kph / 3.6)) m/s."
     }
     
-    //MARK: - Private Methods
-    private func setupElements(_ subViews: UIView...) {
-        subViews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
-    
-    private func setupSubViews(_ subViews: UIView...) {
-        subViews.forEach { self.addSubview($0)
-        }
-    }
-    
     // MARK: - Setup Constraints
     private func setupConstraints() {
         descriptionWeatherLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
