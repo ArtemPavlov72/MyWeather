@@ -18,7 +18,7 @@ class DaySpecsCell: UICollectionViewCell {
     
     private var bottomLine: UIView = {
         let line = UIView()
-        line.backgroundColor = .systemGray6
+        line.backgroundColor = .systemGray5
         return line
     }()
     

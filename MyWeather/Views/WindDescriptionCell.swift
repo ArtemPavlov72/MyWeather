@@ -19,11 +19,17 @@ class WindDescriptionCell: UICollectionViewCell {
         return label
     }()
     
+    private var bottomLine: UIView = {
+        let line = UIView()
+        line.backgroundColor = .systemGray5
+        return line
+    }()
+    
     //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupElements(descriptionWeatherLabel)
-        setupSubViews(descriptionWeatherLabel)
+        setupElements(descriptionWeatherLabel, bottomLine)
+        setupSubViews(descriptionWeatherLabel, bottomLine)
         setupConstraints()
     }
     
@@ -40,6 +46,13 @@ class WindDescriptionCell: UICollectionViewCell {
     private func setupConstraints() {
         descriptionWeatherLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         descriptionWeatherLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        descriptionWeatherLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
+        descriptionWeatherLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8).isActive = true
+        descriptionWeatherLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8).isActive = true
+        
+        bottomLine.topAnchor.constraint(equalTo: self.descriptionWeatherLabel.bottomAnchor, constant: 8).isActive = true
+        bottomLine.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+        bottomLine.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        bottomLine.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8).isActive = true
+        bottomLine.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8).isActive = true
     }
 }

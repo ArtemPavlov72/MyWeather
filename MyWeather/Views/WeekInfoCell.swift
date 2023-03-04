@@ -17,7 +17,7 @@ class WeekInfoCell: UICollectionViewCell {
     private let icon = UIImageView()
     private let chanceLabel = UILabel()
     private let highTempLabel = UILabel()
-    private let lowTempLabel = UILabel()
+    private let lowTempLabel = UILabel()    
     
     //MARK: - Init
     override init(frame: CGRect) {
