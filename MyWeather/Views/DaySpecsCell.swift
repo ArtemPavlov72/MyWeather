@@ -17,10 +17,10 @@ class DaySpecsCell: UICollectionViewCell {
     private var valueLabel = UILabel()
     
     private var backgroundColorView: UIView = {
-        let line = UIView()
-        line.backgroundColor = .white.withAlphaComponent(0.4)
-        line.layer.cornerRadius = 8
-        return line
+        let view = UIView()
+        view.backgroundColor = .white.withAlphaComponent(0.4)
+        view.layer.cornerRadius = 8
+        return view
     }()
     
     private lazy var stackView: UIStackView = {
