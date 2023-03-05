@@ -44,7 +44,7 @@ class WeatherDetailsViewController: UIViewController {
     private func setupCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.backgroundColor = .systemBackground
+        collectionView.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
         view.addSubview(collectionView)
         
         collectionView.register(CityInfoCell.self, forCellWithReuseIdentifier: CityInfoCell.reuseId)
@@ -149,11 +149,11 @@ class WeatherDetailsViewController: UIViewController {
                                               heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(1/4))
+       //let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1/4))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(71))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         
         let layoutSection = NSCollectionLayoutSection(group: group)
-        
         layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: -70, leading: 0, bottom: 0, trailing: 0)
         
         return layoutSection
@@ -170,7 +170,7 @@ class WeatherDetailsViewController: UIViewController {
         
         let layoutSection = NSCollectionLayoutSection(group: group)
         layoutSection.orthogonalScrollingBehavior = .continuous
-        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 25, leading: 8, bottom: 0, trailing: 8)
+        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 50, leading: 8, bottom: 0, trailing: 8)
         
         return layoutSection
     }

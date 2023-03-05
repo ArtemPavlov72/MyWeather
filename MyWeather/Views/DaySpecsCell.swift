@@ -16,17 +16,28 @@ class DaySpecsCell: UICollectionViewCell {
     private var descriptionLabel = UILabel()
     private var valueLabel = UILabel()
     
-    private var bottomLine: UIView = {
+    private var backgroundColorView: UIView = {
         let line = UIView()
-        line.backgroundColor = .systemGray5
+        line.backgroundColor = .white.withAlphaComponent(0.4)
+        line.layer.cornerRadius = 8
         return line
+    }()
+    
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = NSLayoutConstraint.Axis.vertical
+        stackView.alignment = .center
+        stackView.spacing = 3.0
+        stackView.addArrangedSubview(descriptionLabel)
+        stackView.addArrangedSubview(valueLabel)
+        return stackView
     }()
     
     //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupElements(descriptionLabel, valueLabel, bottomLine)
-        setupSubViews(descriptionLabel, valueLabel, bottomLine)
+        setupElements(stackView, backgroundColorView)
+        setupSubViews(stackView, backgroundColorView)
         setupConstraints()
     }
     
@@ -42,14 +53,10 @@ class DaySpecsCell: UICollectionViewCell {
     
     // MARK: - Setup Constraints
     private func setupConstraints() {
-        descriptionLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        descriptionLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        backgroundColorView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+        backgroundColorView.heightAnchor.constraint(equalTo: self.heightAnchor, constant: 40).isActive = true
         
-        valueLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        valueLabel.topAnchor.constraint(equalTo: self.descriptionLabel.bottomAnchor, constant: 3).isActive = true
-        
-        bottomLine.topAnchor.constraint(equalTo: self.valueLabel.bottomAnchor, constant: 0).isActive = true
-        bottomLine.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
-        bottomLine.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        stackView.centerXAnchor.constraint(equalTo: self.backgroundColorView.centerXAnchor).isActive = true
+        stackView.centerYAnchor.constraint(equalTo: self.backgroundColorView.centerYAnchor).isActive = true
     }
 }
