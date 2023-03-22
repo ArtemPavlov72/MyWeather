@@ -19,11 +19,40 @@ class CityInfoCell: UICollectionViewCell {
     private let highTempLabel = UILabel()
     private let lowTempLabel = UILabel()
     
+    private lazy var horizontalStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = NSLayoutConstraint.Axis.horizontal
+        stackView.alignment = .center
+        stackView.spacing = 5.0
+        stackView.addArrangedSubview(lowTempLabel)
+        stackView.addArrangedSubview(highTempLabel)
+        return stackView
+    }()
+    
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = NSLayoutConstraint.Axis.vertical
+        stackView.alignment = .center
+        stackView.spacing = 8.0
+        stackView.addArrangedSubview(cityName)
+        stackView.addArrangedSubview(tempLabel)
+        stackView.addArrangedSubview(conditionLabel)
+        stackView.addArrangedSubview(horizontalStackView)
+        return stackView
+    }()
+    
+    private var backgroundColorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemBlue.withAlphaComponent(0.1)
+        view.layer.cornerRadius = 8
+        return view
+    }()
+    
     //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupElements(cityName, tempLabel, conditionLabel, highTempLabel, lowTempLabel)
-        setupSubViews(cityName, tempLabel, conditionLabel, highTempLabel, lowTempLabel)
+        setupElements(stackView, backgroundColorView)
+        setupSubViews(stackView, backgroundColorView)
         setupConstraints()
     }
     
@@ -44,19 +73,28 @@ class CityInfoCell: UICollectionViewCell {
     
     // MARK: - Setup Constraints
     private func setupConstraints() {
-        cityName.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        cityName.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        backgroundColorView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+        backgroundColorView.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
         
-        tempLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        tempLabel.topAnchor.constraint(equalTo: self.cityName.bottomAnchor, constant: 8).isActive = true
+        stackView.centerXAnchor.constraint(equalTo: self.backgroundColorView.centerXAnchor).isActive = true
+        stackView.centerYAnchor.constraint(equalTo: self.backgroundColorView.centerYAnchor).isActive = true
         
-        conditionLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        conditionLabel.topAnchor.constraint(equalTo: self.tempLabel.bottomAnchor, constant: 8).isActive = true
         
-        highTempLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: -40).isActive = true
-        highTempLabel.topAnchor.constraint(equalTo: self.conditionLabel.bottomAnchor).isActive = true
-        
-        lowTempLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 40).isActive = true
-        lowTempLabel.topAnchor.constraint(equalTo: self.conditionLabel.bottomAnchor).isActive = true
+//        cityName.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+//        cityName.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+//
+//        tempLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+//        tempLabel.topAnchor.constraint(equalTo: self.cityName.bottomAnchor, constant: 8).isActive = true
+//
+//        conditionLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+//        conditionLabel.topAnchor.constraint(equalTo: self.tempLabel.bottomAnchor, constant: 8).isActive = true
+//
+//
+//
+//        highTempLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: -40).isActive = true
+//        highTempLabel.topAnchor.constraint(equalTo: self.conditionLabel.bottomAnchor).isActive = true
+//
+//        lowTempLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 40).isActive = true
+//        lowTempLabel.topAnchor.constraint(equalTo: self.conditionLabel.bottomAnchor).isActive = true
     }
 }

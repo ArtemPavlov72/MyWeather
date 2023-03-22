@@ -17,13 +17,41 @@ class WeekInfoCell: UICollectionViewCell {
     private let icon = UIImageView()
     private let chanceLabel = UILabel()
     private let highTempLabel = UILabel()
-    private let lowTempLabel = UILabel()    
+    private let lowTempLabel = UILabel()
+    
+    private lazy var chanceStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = NSLayoutConstraint.Axis.horizontal
+        stackView.spacing = 8
+        stackView.addArrangedSubview(icon)
+        stackView.addArrangedSubview(chanceLabel)
+        return stackView
+    }()
+    
+    private lazy var tempStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = NSLayoutConstraint.Axis.horizontal
+        stackView.spacing = 8
+        stackView.addArrangedSubview(lowTempLabel)
+        stackView.addArrangedSubview(highTempLabel)
+        return stackView
+    }()
+    
+    private lazy var horizontalStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = NSLayoutConstraint.Axis.horizontal
+        stackView.alignment = .fill
+        stackView.addArrangedSubview(dayLabel)
+        stackView.addArrangedSubview(chanceStackView)
+        stackView.addArrangedSubview(tempStackView)
+        return stackView
+    }()
     
     //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupElements(dayLabel, icon, chanceLabel, highTempLabel, lowTempLabel)
-        setupSubViews(dayLabel, icon, chanceLabel, highTempLabel, lowTempLabel)
+        setupElements(horizontalStackView, chanceStackView, tempStackView)
+        setupSubViews(horizontalStackView, chanceStackView, tempStackView)
         setupConstraints()
     }
     
@@ -69,9 +97,7 @@ class WeekInfoCell: UICollectionViewCell {
     private func chanceResult(with dailyChanceOfRain: Int, andWith dailyChanceOfSnow: Int) -> String {
         var result = ""
         if dailyChanceOfRain == 0 {
-            if dailyChanceOfSnow == 0 {
-                result = ""
-            } else {
+            if dailyChanceOfSnow != 0 {
                 result = "\(dailyChanceOfSnow)%"
             }
         } else {
@@ -82,22 +108,20 @@ class WeekInfoCell: UICollectionViewCell {
     
     // MARK: - Setup Constraints
     private func setupConstraints() {
-        dayLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        dayLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        dayLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
+        horizontalStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        horizontalStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        horizontalStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        horizontalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         
-        icon.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: -20).isActive = true
-        icon.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        icon.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        icon.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        icon.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        icon.widthAnchor.constraint(equalToConstant: 40).isActive = true
         
-        chanceLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 20).isActive = true
-        chanceLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        chanceStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        chanceStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         
-        highTempLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -40).isActive = true
-        highTempLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        tempStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        tempStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         
-        lowTempLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8).isActive = true
-        lowTempLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        
     }
 }

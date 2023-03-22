@@ -18,7 +18,7 @@ class DaySpecsCell: UICollectionViewCell {
     
     private var backgroundColorView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white.withAlphaComponent(0.4)
+        view.backgroundColor = .systemBlue.withAlphaComponent(0.1)
         view.layer.cornerRadius = 8
         return view
     }()

@@ -13,6 +13,7 @@
 		AC1B8B0C29578514009FE784 /* DaySpecsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1B8B0B29578514009FE784 /* DaySpecsCell.swift */; };
 		AC30606E2949AFD300013BED /* WeatherDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC30606D2949AFD300013BED /* WeatherDetailsViewController.swift */; };
 		AC3060702949B18B00013BED /* CityInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC30606F2949B18B00013BED /* CityInfoCell.swift */; };
+		AC30A0ED29C990EE007E0B12 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC30A0EC29C990EE007E0B12 /* Header.swift */; };
 		ACDC7FE62952DF8D005AD834 /* WeekInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDC7FE52952DF8D005AD834 /* WeekInfoCell.swift */; };
 		ACDC7FE82954E0EF005AD834 /* WindDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDC7FE72954E0EF005AD834 /* WindDescriptionCell.swift */; };
 		ACFD61392945028A00FE446E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFD61382945028A00FE446E /* AppDelegate.swift */; };
@@ -31,6 +32,7 @@
 		AC1B8B0B29578514009FE784 /* DaySpecsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaySpecsCell.swift; sourceTree = "<group>"; };
 		AC30606D2949AFD300013BED /* WeatherDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailsViewController.swift; sourceTree = "<group>"; };
 		AC30606F2949B18B00013BED /* CityInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityInfoCell.swift; sourceTree = "<group>"; };
+		AC30A0EC29C990EE007E0B12 /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		ACDC7FE52952DF8D005AD834 /* WeekInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekInfoCell.swift; sourceTree = "<group>"; };
 		ACDC7FE72954E0EF005AD834 /* WindDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindDescriptionCell.swift; sourceTree = "<group>"; };
 		ACFD61352945028A00FE446E /* MyWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,6 +68,7 @@
 		AC3060712949EC9000013BED /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				AC30A0EC29C990EE007E0B12 /* Header.swift */,
 				ACFD614E2945BDBF00FE446E /* WeatherTableViewCell.swift */,
 				AC30606F2949B18B00013BED /* CityInfoCell.swift */,
 				AC09FEF6294B303C00BFD264 /* HourInfoCell.swift */,
@@ -214,6 +217,7 @@
 				AC30606E2949AFD300013BED /* WeatherDetailsViewController.swift in Sources */,
 				AC09FEF7294B303C00BFD264 /* HourInfoCell.swift in Sources */,
 				ACDC7FE82954E0EF005AD834 /* WindDescriptionCell.swift in Sources */,
+				AC30A0ED29C990EE007E0B12 /* Header.swift in Sources */,
 				ACFD61512945BFA500FE446E /* Weather.swift in Sources */,
 				ACDC7FE62952DF8D005AD834 /* WeekInfoCell.swift in Sources */,
 				AC01B77B295DB73E004D3FC0 /* ImageManager.swift in Sources */,

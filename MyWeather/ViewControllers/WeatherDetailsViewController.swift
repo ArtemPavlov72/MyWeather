@@ -44,9 +44,9 @@ class WeatherDetailsViewController: UIViewController {
     private func setupCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
         view.addSubview(collectionView)
         
+        collectionView.register(Header.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: Header.reuseId)
         collectionView.register(CityInfoCell.self, forCellWithReuseIdentifier: CityInfoCell.reuseId)
         collectionView.register(HourInfoCell.self, forCellWithReuseIdentifier: HourInfoCell.reuseId)
         collectionView.register(WeekInfoCell.self, forCellWithReuseIdentifier: WeekInfoCell.reuseId)
@@ -56,7 +56,8 @@ class WeatherDetailsViewController: UIViewController {
     
     // MARK: - Manage the Data
     private func createDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>(collectionView: collectionView){ (collectionView, indexPath, weather) -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>(collectionView: collectionView) {
+            collectionView, indexPath, weather in
             
             let sections = Section.allCases[indexPath.section]
             
@@ -99,6 +100,17 @@ class WeatherDetailsViewController: UIViewController {
                 return cell
             }
         }
+        
+        dataSource?.supplementaryViewProvider = { collectionView, kind, indexPath in
+            guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: Header.reuseId, for: indexPath) as? Header else { return Header() }
+            guard let item = self.dataSource?.itemIdentifier(for: indexPath) else { return Header() }
+            guard let section = self.dataSource?.snapshot().sectionIdentifier(containingItem: item) else { return Header() }
+            
+            sectionHeader.title.text = section.rawValue
+            
+            return sectionHeader
+        }
+        
         dataSource?.apply(generateSnapshot(), animatingDifferences: true)
     }
     
@@ -149,12 +161,11 @@ class WeatherDetailsViewController: UIViewController {
                                               heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-       //let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1/4))
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(71))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1/3))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         
         let layoutSection = NSCollectionLayoutSection(group: group)
-        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: -70, leading: 0, bottom: 0, trailing: 0)
+        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: -10, leading: 8, bottom: 0, trailing: 8)
         
         return layoutSection
     }
@@ -163,14 +174,15 @@ class WeatherDetailsViewController: UIViewController {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                               heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 3, bottom: 0, trailing: 3)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(100),
-                                               heightDimension: .absolute(100))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/4),
+                                               heightDimension: .absolute(110))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let layoutSection = NSCollectionLayoutSection(group: group)
         layoutSection.orthogonalScrollingBehavior = .continuous
-        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 50, leading: 8, bottom: 0, trailing: 8)
+        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 30, leading: 8, bottom: 0, trailing: 8)
         
         return layoutSection
     }
@@ -180,11 +192,15 @@ class WeatherDetailsViewController: UIViewController {
                                               heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(1/8))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(40))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         
         let layoutSection = NSCollectionLayoutSection(group: group)
-        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 50, leading: 8, bottom: 0, trailing: 8)
+        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 8, bottom: 0, trailing: 8)
+        
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        layoutSection.boundarySupplementaryItems = [header]
         
         return layoutSection
     }
@@ -209,30 +225,24 @@ class WeatherDetailsViewController: UIViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 8, bottom: 0, trailing: 8)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1/14))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(60))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
         
+        
         let layoutSection = NSCollectionLayoutSection(group: group)
-        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 0, bottom: 0, trailing: 0)
+        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 0, bottom: 8, trailing: 0)
         
         return layoutSection
     }
 }
 
 extension WeatherDetailsViewController {
-    enum Section: Hashable, CaseIterable {
+    enum Section: String, Hashable, CaseIterable {
         case currentWeather
         case hourWeather
-        case weekWeather
+        case weekWeather = "Weather for 2 days"
         case windDescription
         case daySpecs
     }
 }
-
-
-
-
-
-
-
 

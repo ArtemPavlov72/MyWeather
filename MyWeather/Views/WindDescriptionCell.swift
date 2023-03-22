@@ -22,7 +22,7 @@ class WindDescriptionCell: UICollectionViewCell {
     
     private var backgroundColorView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white.withAlphaComponent(0.4)
+        view.backgroundColor = .systemBlue.withAlphaComponent(0.1)
         view.layer.cornerRadius = 8
         return view
     }()
@@ -53,11 +53,5 @@ class WindDescriptionCell: UICollectionViewCell {
         descriptionWeatherLabel.centerYAnchor.constraint(equalTo: self.backgroundColorView.centerYAnchor).isActive = true
         descriptionWeatherLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8).isActive = true
         descriptionWeatherLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8).isActive = true
-        
-//        bottomLine.topAnchor.constraint(equalTo: self.descriptionWeatherLabel.bottomAnchor, constant: 8).isActive = true
-//        bottomLine.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
-//        bottomLine.heightAnchor.constraint(equalToConstant: 1).isActive = true
-//        bottomLine.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8).isActive = true
-//        bottomLine.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8).isActive = true
     }
 }
