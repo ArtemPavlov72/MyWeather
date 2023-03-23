@@ -19,7 +19,7 @@ class DaySpecsCell: UICollectionViewCell {
     private var backgroundColorView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBlue.withAlphaComponent(0.1)
-        view.layer.cornerRadius = 8
+        view.layer.cornerRadius = 15
         return view
     }()
     
@@ -54,7 +54,7 @@ class DaySpecsCell: UICollectionViewCell {
     // MARK: - Setup Constraints
     private func setupConstraints() {
         backgroundColorView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
-        backgroundColorView.heightAnchor.constraint(equalTo: self.heightAnchor, constant: 40).isActive = true
+        backgroundColorView.heightAnchor.constraint(equalTo: self.heightAnchor, constant: 45).isActive = true
         
         stackView.centerXAnchor.constraint(equalTo: self.backgroundColorView.centerXAnchor).isActive = true
         stackView.centerYAnchor.constraint(equalTo: self.backgroundColorView.centerYAnchor).isActive = true

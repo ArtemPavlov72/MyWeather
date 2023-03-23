@@ -23,6 +23,7 @@ class WeatherDetailsViewController: UIViewController {
     //MARK: - Life Cycles Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.prefersLargeTitles = false
         getData()
         setupCollectionView()
         createDataSource()
@@ -154,6 +155,10 @@ class WeatherDetailsViewController: UIViewController {
         }
         
         layout.register(RoundedBackgroundView.self, forDecorationViewOfKind: RoundedBackgroundView.reuseId)
+        
+        let config = UICollectionViewCompositionalLayoutConfiguration()
+        config.interSectionSpacing = 16
+        layout.configuration = config
 
         return layout
     }
@@ -162,12 +167,15 @@ class WeatherDetailsViewController: UIViewController {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                               heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1/3))
+
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(180))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         
         let layoutSection = NSCollectionLayoutSection(group: group)
-        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: -10, leading: 8, bottom: 0, trailing: 8)
+        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 0, bottom: 0, trailing: 0)
+        layoutSection.decorationItems = [
+            NSCollectionLayoutDecorationItem.background(elementKind: RoundedBackgroundView.reuseId)
+        ]
         
         return layoutSection
     }
@@ -176,15 +184,15 @@ class WeatherDetailsViewController: UIViewController {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                               heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 3, bottom: 0, trailing: 3)
+        item.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 4, bottom: 0, trailing: 0)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/4),
-                                               heightDimension: .absolute(110))
+                                               heightDimension: .absolute(120))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let layoutSection = NSCollectionLayoutSection(group: group)
         layoutSection.orthogonalScrollingBehavior = .continuous
-        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 30, leading: 8, bottom: 0, trailing: 8)
+        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 4, bottom: 0, trailing: 8)
         
         return layoutSection
     }
@@ -198,12 +206,11 @@ class WeatherDetailsViewController: UIViewController {
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         
         let layoutSection = NSCollectionLayoutSection(group: group)
-        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 16, bottom: 0, trailing: 16)
+        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 16, bottom: 8, trailing: 16)
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         layoutSection.boundarySupplementaryItems = [header]
-        
         layoutSection.decorationItems = [
             NSCollectionLayoutDecorationItem.background(elementKind: RoundedBackgroundView.reuseId)
         ]
@@ -216,11 +223,16 @@ class WeatherDetailsViewController: UIViewController {
                                               heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(1/8))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(70))
+        
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         
         let layoutSection = NSCollectionLayoutSection(group: group)
-        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 20, leading: 8, bottom: 0, trailing: 8)
+        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 8, bottom: 0, trailing: 8)
+        
+        layoutSection.decorationItems = [
+            NSCollectionLayoutDecorationItem.background(elementKind: RoundedBackgroundView.reuseId)
+        ]
         
         return layoutSection
     }
@@ -229,13 +241,13 @@ class WeatherDetailsViewController: UIViewController {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                               heightDimension: .fractionalHeight(1/3))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 8, bottom: 0, trailing: 8)
+        item.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 8, bottom: 16, trailing: 8)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(60))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(68))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
         
         let layoutSection = NSCollectionLayoutSection(group: group)
-        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 0, bottom: 8, trailing: 0)
+        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 0, bottom: 0, trailing: 0)
         
         return layoutSection
     }

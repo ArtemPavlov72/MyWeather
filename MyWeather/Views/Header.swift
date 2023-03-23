@@ -17,7 +17,7 @@ class Header: UICollectionReusableView {
         super.init(frame: frame)
 
         title.textColor = .label
-        title.font = UIFontMetrics.default.scaledFont(for: UIFont.systemFont(ofSize: 22, weight: .bold))
+        title.font = UIFontMetrics.default.scaledFont(for: UIFont.systemFont(ofSize: 20, weight: .bold))
         
         title.translatesAutoresizingMaskIntoConstraints = false
         addSubview(title)

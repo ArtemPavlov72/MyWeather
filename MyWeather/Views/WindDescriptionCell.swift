@@ -20,18 +20,11 @@ class WindDescriptionCell: UICollectionViewCell {
         return label
     }()
     
-    private var backgroundColorView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .systemBlue.withAlphaComponent(0.1)
-        view.layer.cornerRadius = 8
-        return view
-    }()
-    
     //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupElements(descriptionWeatherLabel, backgroundColorView)
-        setupSubViews(descriptionWeatherLabel, backgroundColorView)
+        setupElements(descriptionWeatherLabel)
+        setupSubViews(descriptionWeatherLabel)
         setupConstraints()
     }
     
@@ -46,11 +39,8 @@ class WindDescriptionCell: UICollectionViewCell {
     
     // MARK: - Setup Constraints
     private func setupConstraints() {
-        backgroundColorView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
-        backgroundColorView.heightAnchor.constraint(equalTo: self.heightAnchor, constant: 10).isActive = true
-        
-        descriptionWeatherLabel.centerXAnchor.constraint(equalTo: self.backgroundColorView.centerXAnchor).isActive = true
-        descriptionWeatherLabel.centerYAnchor.constraint(equalTo: self.backgroundColorView.centerYAnchor).isActive = true
+        descriptionWeatherLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        descriptionWeatherLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         descriptionWeatherLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8).isActive = true
         descriptionWeatherLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8).isActive = true
     }

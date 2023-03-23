@@ -20,7 +20,7 @@ class HourInfoCell: UICollectionViewCell {
     private var backgroundColorView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBlue.withAlphaComponent(0.1)
-        view.layer.cornerRadius = 8
+        view.layer.cornerRadius = 15
         return view
     }()
     
@@ -84,20 +84,12 @@ class HourInfoCell: UICollectionViewCell {
     private func setupConstraints() {
         backgroundColorView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
         backgroundColorView.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
-        
-        
+    
         stackView.centerXAnchor.constraint(equalTo: self.backgroundColorView.centerXAnchor).isActive = true
         stackView.centerYAnchor.constraint(equalTo: self.backgroundColorView.centerYAnchor).isActive = true
         
-//        timeLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-//        timeLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-//
-//        icon.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-//        icon.topAnchor.constraint(equalTo: self.timeLabel.bottomAnchor, constant: 8).isActive = true
         icon.heightAnchor.constraint(equalToConstant: 40).isActive = true
         icon.widthAnchor.constraint(equalToConstant: 40).isActive = true
-//
-//        tempLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-//        tempLabel.topAnchor.constraint(equalTo: self.icon.bottomAnchor, constant: 8).isActive = true
+
     }
 }
