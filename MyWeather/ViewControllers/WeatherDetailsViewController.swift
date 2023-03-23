@@ -17,7 +17,6 @@ class WeatherDetailsViewController: UIViewController {
     private var weekendWeather: [ForecastDay] = []
     private var windInfo: CityWeatherData?
     private var daySpecs: [DaySpec] = []
-    
     private var dataSource: UICollectionViewDiffableDataSource<Section, AnyHashable>?
     private var collectionView: UICollectionView!
     
@@ -146,13 +145,16 @@ class WeatherDetailsViewController: UIViewController {
             case .hourWeather:
                 return self.createHourInfoSection()
             case .weekWeather:
-                return self.createWeekendInfoSection()
+                return self.createWeekInfoSection()
             case .windDescription:
                 return self.textDescriptionOdDaySection()
             case .daySpecs:
                 return self.daySpecsSection()
             }
         }
+        
+        layout.register(RoundedBackgroundView.self, forDecorationViewOfKind: RoundedBackgroundView.reuseId)
+
         return layout
     }
     
@@ -187,7 +189,7 @@ class WeatherDetailsViewController: UIViewController {
         return layoutSection
     }
     
-    private func createWeekendInfoSection() -> NSCollectionLayoutSection {
+    private func createWeekInfoSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                               heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -196,11 +198,15 @@ class WeatherDetailsViewController: UIViewController {
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         
         let layoutSection = NSCollectionLayoutSection(group: group)
-        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 8, bottom: 0, trailing: 8)
+        layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 16, bottom: 0, trailing: 16)
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         layoutSection.boundarySupplementaryItems = [header]
+        
+        layoutSection.decorationItems = [
+            NSCollectionLayoutDecorationItem.background(elementKind: RoundedBackgroundView.reuseId)
+        ]
         
         return layoutSection
     }
@@ -227,7 +233,6 @@ class WeatherDetailsViewController: UIViewController {
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(60))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
-        
         
         let layoutSection = NSCollectionLayoutSection(group: group)
         layoutSection.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 0, bottom: 8, trailing: 0)

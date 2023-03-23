@@ -25,7 +25,7 @@ class Header: UICollectionReusableView {
         NSLayoutConstraint.activate([
             title.leadingAnchor.constraint(equalTo: leadingAnchor),
             title.trailingAnchor.constraint(equalTo: trailingAnchor),
-            title.topAnchor.constraint(equalTo: topAnchor),
+            title.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             title.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
