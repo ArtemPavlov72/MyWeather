@@ -8,7 +8,7 @@
 import UIKit
 
 class WeatherTableViewCell: UITableViewCell {
-    
+      
     //MARK: - Static Properties
     static let reuseId: String = "weatherCell"
 

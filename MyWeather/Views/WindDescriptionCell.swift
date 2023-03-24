@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WindDescriptionCell: UICollectionViewCell {
+class WindDescriptionCell: UICollectionViewCell, SelfConfiguringCell {
     
     //MARK: - Static Properties
     static let reuseId: String = "textDescriptionOfDay"
@@ -33,8 +33,9 @@ class WindDescriptionCell: UICollectionViewCell {
     }
     
     //MARK: - Confirure cell
-    func configure(with windInfo: CityWeatherData) {
-        descriptionWeatherLabel.text = "Now, wind speed is about \(String(format:"%.0f",  windInfo.wind_kph / 3.6)) m/s. And gusts can change to \(String(format:"%.0f", windInfo.gust_kph / 3.6)) m/s."
+    func configure(with data: Any) {
+        guard let weatherData = data as? CityWeatherData else { return }
+        descriptionWeatherLabel.text = "Now, wind speed is about \(String(format:"%.0f",  weatherData.wind_kph / 3.6)) m/s. And gusts can change to \(String(format:"%.0f", weatherData.gust_kph / 3.6)) m/s."
     }
     
     // MARK: - Setup Constraints

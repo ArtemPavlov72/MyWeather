@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WeekInfoCell: UICollectionViewCell {
+class WeekInfoCell: UICollectionViewCell, SelfConfiguringCell {
     
     //MARK: - Static Properties
     static let reuseId: String = "weekendWeather"
@@ -59,13 +59,14 @@ class WeekInfoCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - Confirure cell
-    func configure(with forecast: ForecastDay) {
-        dayLabel.text = formatDate(forecast.date, fromFormat: "yyyy-MM-dd", toFormat: "EEEE")
-        fetchImage(from: forecast.day.condition.icon)
-        chanceLabel.text = chanceResult(with: forecast.day.daily_chance_of_rain, andWith: forecast.day.daily_chance_of_snow)
-        highTempLabel.text = String(format:"%.0f", forecast.day.maxtemp_c) + "°"
-        lowTempLabel.text = String(format:"%.0f", forecast.day.mintemp_c) + "°"
+    //MARK: - Confirure cell    
+    func configure(with data: Any) {
+        guard let weatherData = data as? ForecastDay else { return }
+        dayLabel.text = formatDate(weatherData.date, fromFormat: "yyyy-MM-dd", toFormat: "EEEE")
+        fetchImage(from: weatherData.day.condition.icon)
+        chanceLabel.text = chanceResult(with: weatherData.day.daily_chance_of_rain, andWith: weatherData.day.daily_chance_of_snow)
+        highTempLabel.text = String(format:"%.0f", weatherData.day.maxtemp_c) + "°"
+        lowTempLabel.text = String(format:"%.0f", weatherData.day.mintemp_c) + "°"
     }
     
     //MARK: - Private Methods

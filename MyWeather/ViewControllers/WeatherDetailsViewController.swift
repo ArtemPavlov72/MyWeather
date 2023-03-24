@@ -55,49 +55,31 @@ class WeatherDetailsViewController: UIViewController {
     }
     
     // MARK: - Manage the Data
+    private func configure<T: SelfConfiguringCell>(_ cellType: T.Type, with data: AnyHashable, for indexPath: IndexPath) -> T {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellType.reuseId, for: indexPath) as? T else {
+            fatalError("Unable to dequeue \(cellType)")
+        }
+        cell.configure(with: data)
+        return cell
+    }
+    
     private func createDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>(collectionView: collectionView) {
+        dataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>(collectionView: collectionView) { [self]
             collectionView, indexPath, weather in
             
             let sections = Section.allCases[indexPath.section]
             
             switch sections {
             case .currentWeather:
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CityInfoCell.reuseId, for: indexPath) as? CityInfoCell else {
-                    return CityInfoCell()
-                }
-                cell.configure(with: weather as! Weather)
-                return cell
-                
+                return configure(CityInfoCell.self, with: weather, for: indexPath)
             case .hourWeather:
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HourInfoCell.reuseId, for: indexPath) as? HourInfoCell else {
-                    return HourInfoCell()
-                }
-                cell.configure(with: weather as! Hour)
-                return cell
-                
+                return configure(HourInfoCell.self, with: weather, for: indexPath)
             case .weekWeather:
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeekInfoCell.reuseId, for: indexPath) as? WeekInfoCell else {
-                    return WeekInfoCell()
-                }
-                cell.configure(with: weather as! ForecastDay)
-                return cell
-                
+                return configure(WeekInfoCell.self, with: weather, for: indexPath)
             case .windDescription:
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WindDescriptionCell.reuseId, for: indexPath) as? WindDescriptionCell else {
-                    return WindDescriptionCell()
-                }
-                cell.configure(with: weather as! CityWeatherData)
-                return cell
-                
+                return configure(WindDescriptionCell.self, with: weather, for: indexPath)
             case .daySpecs:
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DaySpecsCell.reuseId, for: indexPath) as? DaySpecsCell else {
-                    return DaySpecsCell()
-                }
-                
-                let spec = self.daySpecs[indexPath.row]
-                cell.configure(with: spec.description, and: spec.value)
-                return cell
+                return configure(DaySpecsCell.self, with: weather, for: indexPath)
             }
         }
         

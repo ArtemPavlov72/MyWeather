@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DaySpecsCell: UICollectionViewCell {
+class DaySpecsCell: UICollectionViewCell, SelfConfiguringCell {
     
     //MARK: - Static Properties
     static let reuseId: String = "weatherDaySpecs"
@@ -46,9 +46,10 @@ class DaySpecsCell: UICollectionViewCell {
     }
     
     //MARK: - Confirure cell
-    func configure(with description: String, and value: String) {
-        descriptionLabel.text = description
-        valueLabel.text = value
+    func configure(with data: Any) {
+        guard let weatherData = data as? DaySpec else { return }
+        descriptionLabel.text = weatherData.description
+        valueLabel.text = weatherData.value
     }
     
     // MARK: - Setup Constraints

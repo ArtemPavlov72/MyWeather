@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CityInfoCell: UICollectionViewCell {
+class CityInfoCell: UICollectionViewCell, SelfConfiguringCell {
     
     //MARK: - Static Properties
     static let reuseId: String = "cityInfo"
@@ -54,15 +54,16 @@ class CityInfoCell: UICollectionViewCell {
     }
     
     //MARK: - Confirure cell
-    func configure(with city: Weather) {
-        cityName.text = city.location.name
-        tempLabel.text = city.current.temp_c.description + "°"
-        conditionLabel.text = city.current.condition.text
-        
-        guard let forecastForDay = city.forecast.forecastday.first else {return}
-        highTempLabel.text = "H: " + String(describing:forecastForDay.day.maxtemp_c) + "°"
-        lowTempLabel.text = "L: " + String(describing:forecastForDay.day.mintemp_c) + "°"
-    }
+        func configure(with data: Any) {
+            guard let weatherData = data as? Weather else { return }
+            cityName.text = weatherData.location.name
+            tempLabel.text = weatherData.current.temp_c.description + "°"
+            conditionLabel.text = weatherData.current.condition.text
+            
+            guard let forecastForDay = weatherData.forecast.forecastday.first else {return}
+            highTempLabel.text = "H: " + String(describing:forecastForDay.day.maxtemp_c) + "°"
+            lowTempLabel.text = "L: " + String(describing:forecastForDay.day.mintemp_c) + "°"
+        }
     
     // MARK: - Setup Constraints
     private func setupConstraints() {

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HourInfoCell: UICollectionViewCell {
+class HourInfoCell: UICollectionViewCell, SelfConfiguringCell {
     
     //MARK: - Static Properties
     static let reuseId: String = "hourWeather"
@@ -48,12 +48,13 @@ class HourInfoCell: UICollectionViewCell {
     }
     
     //MARK: - Confirure cell
-    func configure(with hourWeather: Hour) {
-        fetchImage(from: hourWeather.condition.icon)
-        timeLabel.text = formatDate(hourWeather.time, fromFormat: "yyyy-MM-dd HH:mm", toFormat: "h:mm a")
-        tempLabel.text = String(format:"%.0f", hourWeather.temp_c) + "°"
+    func configure(with data: Any) {
+        guard let weatherData = data as? Hour else { return }
+        fetchImage(from: weatherData.condition.icon)
+        timeLabel.text = formatDate(weatherData.time, fromFormat: "yyyy-MM-dd HH:mm", toFormat: "h:mm a")
+        tempLabel.text = String(format:"%.0f", weatherData.temp_c) + "°"
     }
-    
+        
     //MARK: - Private Methods
     private func formatDate(_ date: String, fromFormat: String, toFormat: String) -> String {
         var dateToOutput = ""
