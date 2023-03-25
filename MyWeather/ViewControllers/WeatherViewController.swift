@@ -26,7 +26,7 @@ class WeatherController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(WeatherTableViewCell.self, forCellReuseIdentifier: WeatherTableViewCell.reuseId)
-        
+        setupNavigationBar()
         setupSearchController()
         tableView.rowHeight = 70
         getWeatherForCity("Moscow", "London", "Spain", "Surgut", "Tyumen", "Tbilisi", "Kazan", "Berlin", "Paris", "Sofia")
@@ -34,7 +34,7 @@ class WeatherController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        setupNavigationBar()
+        updateNavigationBar()
     }
     
     // MARK: - UITableViewDataSource
@@ -61,6 +61,10 @@ class WeatherController: UITableViewController {
     //MARK: - Private Methods
     private func setupNavigationBar() {
         title = "Weather"
+        navigationItem.largeTitleDisplayMode = .always
+    }
+    
+    private func updateNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     

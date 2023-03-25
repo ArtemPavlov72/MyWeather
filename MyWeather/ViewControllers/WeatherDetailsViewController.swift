@@ -23,7 +23,7 @@ class WeatherDetailsViewController: UIViewController {
     //MARK: - Life Cycles Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationItem.largeTitleDisplayMode = .never
         getData()
         setupCollectionView()
         createDataSource()
@@ -37,7 +37,7 @@ class WeatherDetailsViewController: UIViewController {
         weekendWeather.append(forecast.forecastday[1])
         weekendWeather.append(forecast.forecastday[2])
         windInfo = weather.current
-        WeatherSpecs.allCases.map { daySpecs.append(DaySpec(description: $0.rawValue, value: WeatherSpecs.getInfo(for: $0, from: weather)))
+        _ = WeatherSpecs.allCases.map { daySpecs.append(DaySpec(description: $0.rawValue, value: WeatherSpecs.getInfo(for: $0, from: weather)))
         }
     }
     
