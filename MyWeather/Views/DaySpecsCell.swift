@@ -55,7 +55,7 @@ class DaySpecsCell: UICollectionViewCell, SelfConfiguringCell {
     // MARK: - Setup Constraints
     private func setupConstraints() {
         backgroundColorView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
-        backgroundColorView.heightAnchor.constraint(equalTo: self.heightAnchor, constant: 45).isActive = true
+        backgroundColorView.heightAnchor.constraint(equalTo: self.heightAnchor, constant: 60).isActive = true
         
         stackView.centerXAnchor.constraint(equalTo: self.backgroundColorView.centerXAnchor).isActive = true
         stackView.centerYAnchor.constraint(equalTo: self.backgroundColorView.centerYAnchor).isActive = true
