@@ -165,5 +165,6 @@ extension WeatherController: WeatherControllerDelegate {
         cities.append(city)
         citiesList.removeAll()
         getWeatherForCity()
+        searchController.isActive = false
     }
 }

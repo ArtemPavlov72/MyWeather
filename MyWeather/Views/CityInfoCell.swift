@@ -56,7 +56,7 @@ class CityInfoCell: UICollectionViewCell, SelfConfiguringCell {
     //MARK: - Confirure cell
         func configure(with data: Any) {
             guard let weatherData = data as? Weather else { return }
-            cityName.text = "\(weatherData.location.name), \(weatherData.location.country)"
+            cityName.text = "\(weatherData.location.name), \(weatherData.location.country)"  
             tempLabel.text = weatherData.current.temp_c.description + "°"
             conditionLabel.text = weatherData.current.condition.text
             
