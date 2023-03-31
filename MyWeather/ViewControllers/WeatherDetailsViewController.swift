@@ -11,6 +11,9 @@ class WeatherDetailsViewController: UIViewController {
     
     //MARK: - Public Properties
     var weather: Weather!
+    var delegate: WeatherControllerDelegate!
+    var isNewCity = false
+    var name: String?
     
     //MARK: - Private Properties
     private var hourWeather: [Hour] = []
@@ -23,15 +26,28 @@ class WeatherDetailsViewController: UIViewController {
     //MARK: - Life Cycles Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.largeTitleDisplayMode = .never
+        setupNavBar()
         getData()
         setupCollectionView()
         createDataSource()
     }
     
     //MARK: - Private Methods
+    private func setupNavBar() {
+        navigationItem.largeTitleDisplayMode = .never
+        if isNewCity {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewCity))
+        }
+    }
+    
+    @objc private func addNewCity() {
+        delegate.addNewCity(name ?? "Tyumen")
+        dismiss(animated: true)
+    }
+    
+    
+    
     private func getData() {
-        
         let forecast = weather.forecast
         let forecastDay = forecast.forecastday.first
         hourWeather = forecastDay?.hour ?? []

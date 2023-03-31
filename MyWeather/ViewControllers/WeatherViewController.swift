@@ -7,9 +7,14 @@
 
 import UIKit
 
+protocol WeatherControllerDelegate {
+    func addNewCity(_ city: String)
+}
+
 class WeatherController: UITableViewController {
     
     //MARK: - Private Properties
+    private var cities: [String] = ["Surgut"]
     private var citiesList: [Weather] = []
     private var filteredCities: [CityLocationData] = []
     
@@ -55,17 +60,19 @@ class WeatherController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if isFiltering {
-            var serchingWC: Weather?
             guard let city = filteredCities[indexPath.row].url else { return }
             
             NetworkManager.shared.fetchData(for: city, from: Links.getWeatherURL(forCity: city, forNumberOfDays: 3)) {
                 result in
                 switch result {
                 case .success(let weather):
-                    serchingWC = weather
                     let weatherDetailVC = WeatherDetailsViewController()
-                    weatherDetailVC.weather = serchingWC
-                    self.present(weatherDetailVC, animated: true)
+                    weatherDetailVC.weather = weather
+                    weatherDetailVC.isNewCity = true
+                    weatherDetailVC.name = city
+                    weatherDetailVC.delegate = self
+                    let navigationVC = UINavigationController(rootViewController: weatherDetailVC)
+                    self.present(navigationVC, animated: true)
                 case .failure(let error):
                     print(error)
                 }
@@ -90,14 +97,15 @@ class WeatherController: UITableViewController {
     
     private func getListOfWeather() {
         if !UserDefaults.standard.bool(forKey: "notFirstEnter") {
-            getWeatherForCity(DataManager.shared.createStartListOfCities())
+            cities = DataManager.shared.createStartListOfCities()
+            getWeatherForCity()
             UserDefaults.standard.set(true, forKey: "notFirstEnter")
         } else {
-            getWeatherForCity(["Surgut"])
+            getWeatherForCity()
         }
     }
     
-    private func getWeatherForCity(_ cities: [String]) {
+    private func getWeatherForCity() {
         cities.forEach { city in
             NetworkManager.shared.fetchData(for: city, from: Links.getWeatherURL(forCity: city, forNumberOfDays: 3)) {
                 result in
@@ -111,8 +119,7 @@ class WeatherController: UITableViewController {
             }
         }
     }
-    
-    
+
     private func getWeatherForSearch(city: String) {
         NetworkManager.shared.fetchSearchingData(for: city, from: Links.geSearchURL()) {
             result in
@@ -149,5 +156,14 @@ extension WeatherController: UISearchResultsUpdating {
     
     private func filterContentForSearchText(_ searchText: String) {
         getWeatherForSearch(city: searchText)
+    }
+}
+
+// MARK: - Delegate New City
+extension WeatherController: WeatherControllerDelegate {
+    func addNewCity(_ city: String) {
+        cities.append(city)
+        citiesList.removeAll()
+        getWeatherForCity()
     }
 }
