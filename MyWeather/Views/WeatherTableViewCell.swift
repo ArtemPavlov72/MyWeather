@@ -30,10 +30,17 @@ class WeatherTableViewCell: UITableViewCell {
     }
     
     //MARK: - Confirure cell
-    func configure(with city: Weather) {
-        cityName.text = city.location.name
-        temp.text = String(describing: city.current.temp_c) + "°"
-        fetchImage(from: city.current.condition.icon)
+    func configure(with data: Any) {
+        if let city = data as? Weather {
+            cityName.text = city.location.name
+            temp.text = String(describing: city.current.temp_c) + "°"
+            fetchImage(from: city.current.condition.icon)
+        } else {
+            guard let city = data as? CityLocationData else { return }
+            cityName.text = "\(city.name), \(city.country)"
+            temp.text = nil
+            picture.image = nil
+        }
     }
     
     //MARK: - Private Methods
@@ -43,7 +50,7 @@ class WeatherTableViewCell: UITableViewCell {
             
             guard let imageData = ImageManager.shared.loadImage(from: corectUrl) else { return }
             DispatchQueue.main.async {
-                self.picture.image = UIImage(data: imageData)!
+                self.picture.image = UIImage(data: imageData)
             }
         }
     }

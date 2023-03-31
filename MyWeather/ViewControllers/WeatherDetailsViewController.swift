@@ -31,6 +31,7 @@ class WeatherDetailsViewController: UIViewController {
     
     //MARK: - Private Methods
     private func getData() {
+        
         let forecast = weather.forecast
         let forecastDay = forecast.forecastday.first
         hourWeather = forecastDay?.hour ?? []

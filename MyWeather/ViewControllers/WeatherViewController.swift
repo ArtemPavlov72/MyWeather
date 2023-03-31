@@ -11,7 +11,7 @@ class WeatherController: UITableViewController {
     
     //MARK: - Private Properties
     private var citiesList: [Weather] = []
-    private var filteredCities: [Weather] = []
+    private var filteredCities: [CityLocationData] = []
     
     private let searchController = UISearchController(searchResultsController: nil)
     private var searchBarIsEmpty: Bool {
@@ -29,7 +29,7 @@ class WeatherController: UITableViewController {
         setupNavigationBar()
         setupSearchController()
         tableView.rowHeight = 70
-        getWeatherForCity("Moscow", "London", "Spain", "Surgut", "Tyumen", "Tbilisi", "Kazan", "Berlin", "Paris", "Sofia")
+        getListOfWeather()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,18 +44,38 @@ class WeatherController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: WeatherTableViewCell.reuseId, for: indexPath) as! WeatherTableViewCell
-        let city = isFiltering ? filteredCities[indexPath.row] : citiesList[indexPath.row]
+        
+        let city: Any = isFiltering ? filteredCities[indexPath.row] : citiesList[indexPath.row]
         cell.configure(with: city)
+        
         return cell
     }
     
     //MARK: - UITableViewDelegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let city = isFiltering ? filteredCities[indexPath.item] : citiesList[indexPath.item]
-        let weatherDetailVC = WeatherDetailsViewController()
-        weatherDetailVC.weather = city
-        show(weatherDetailVC, sender: nil)
+        if isFiltering {
+            var serchingWC: Weather?
+            guard let city = filteredCities[indexPath.row].url else { return }
+            
+            NetworkManager.shared.fetchData(for: city, from: Links.getWeatherURL(forCity: city, forNumberOfDays: 3)) {
+                result in
+                switch result {
+                case .success(let weather):
+                    serchingWC = weather
+                    let weatherDetailVC = WeatherDetailsViewController()
+                    weatherDetailVC.weather = serchingWC
+                    self.present(weatherDetailVC, animated: true)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        } else {
+            let city = citiesList[indexPath.item]
+            let weatherDetailVC = WeatherDetailsViewController()
+            weatherDetailVC.weather = city
+            show(weatherDetailVC, sender: nil)
+        }
     }
     
     //MARK: - Private Methods
@@ -68,7 +88,16 @@ class WeatherController: UITableViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
-    private func getWeatherForCity(_ cities: String...) {
+    private func getListOfWeather() {
+        if !UserDefaults.standard.bool(forKey: "notFirstEnter") {
+            getWeatherForCity(DataManager.shared.createStartListOfCities())
+            UserDefaults.standard.set(true, forKey: "notFirstEnter")
+        } else {
+            getWeatherForCity(["Surgut"])
+        }
+    }
+    
+    private func getWeatherForCity(_ cities: [String]) {
         cities.forEach { city in
             NetworkManager.shared.fetchData(for: city, from: Links.getWeatherURL(forCity: city, forNumberOfDays: 3)) {
                 result in
@@ -79,6 +108,20 @@ class WeatherController: UITableViewController {
                 case .failure(let error):
                     print(error)
                 }
+            }
+        }
+    }
+    
+    
+    private func getWeatherForSearch(city: String) {
+        NetworkManager.shared.fetchSearchingData(for: city, from: Links.geSearchURL()) {
+            result in
+            switch result {
+            case .success(let weather):
+                self.filteredCities = weather
+                self.tableView.reloadData()
+            case .failure(let error):
+                print(error)
             }
         }
     }
@@ -95,14 +138,16 @@ class WeatherController: UITableViewController {
 // MARK: - UISearchResultsUpdating
 extension WeatherController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        filterContentForSearchText(searchController.searchBar.text!)
+        if !searchBarIsEmpty {
+            guard let text = searchController.searchBar.text else { return }
+            filterContentForSearchText(text)
+        }
+        if !isFiltering {
+            self.tableView.reloadData()
+        }
     }
     
     private func filterContentForSearchText(_ searchText: String) {
-        filteredCities = citiesList.filter { city in
-            city.location.name.lowercased().contains(searchText.lowercased())
-        }.sorted {$0.location.name < $1.location.name }
-        tableView.reloadData()
+        getWeatherForSearch(city: searchText)
     }
 }
-

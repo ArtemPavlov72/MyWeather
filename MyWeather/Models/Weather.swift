@@ -18,7 +18,8 @@ struct CityLocationData: Decodable, Hashable {
     let country: String
     let lat: Double
     let lon: Double
-    let localtime: String
+    let localtime: String?
+    let url: String?
 }
 
 struct CityWeatherData: Decodable, Hashable {
@@ -113,11 +114,18 @@ enum Links: String {
     case currentWeather = "/current.json"
     case forecast = "/forecast.json"
     case historyWeather = "/history.json"
+    case search = "/search.json?key=<YOUR_API_KEY>&q=lond"
     
     static func getWeatherURL(forCity city: String, forNumberOfDays days: Int) -> String {
         let url = "https://api.weatherapi.com/v1\(Links.forecast.rawValue)?key=\(Keys.apiKey.rawValue)&q=\(city)&days=\(days)&aqi=no&alerts=no"
         return url
     }
+    
+    static func geSearchURL() -> String {
+        let url = "https://api.weatherapi.com/v1/search.json?key=\(Keys.apiKey.rawValue)&q="
+        return url
+    }
+    
 }
 
 enum Keys: String {
